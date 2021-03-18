@@ -46,12 +46,12 @@ public abstract class ConstructorAccess<T> {
 				String classNameInternal = className.replace('.', '/');
 				String enclosingClassNameInternal;
 
-				boolean isPrivate = false;
+				boolean isPrivate;
 				if (!isNonStaticMemberClass) {
 					enclosingClassNameInternal = null;
 					try {
 						Constructor<T> constructor = type.getDeclaredConstructor((Class[])null);
-						isPrivate = Modifier.isPrivate(constructor.getModifiers());
+						isPrivate = !Modifier.isPublic(constructor.getModifiers());
 					} catch (Exception ex) {
 						throw new RuntimeException("Class cannot be created (missing no-arg constructor): " + type.getName(), ex);
 					}
@@ -62,7 +62,7 @@ public abstract class ConstructorAccess<T> {
 					enclosingClassNameInternal = enclosingType.getName().replace('.', '/');
 					try {
 						Constructor<T> constructor = type.getDeclaredConstructor(enclosingType); // Inner classes should have this.
-						isPrivate = Modifier.isPrivate(constructor.getModifiers());
+						isPrivate = !Modifier.isPublic(constructor.getModifiers());
 					} catch (Exception ex) {
 						throw new RuntimeException("Non-static member class cannot be created (missing enclosing class constructor): "
 							+ type.getName(), ex);
