@@ -50,10 +50,25 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>blue-ftp</id>
+            <url>scp://new.server/var/www/html/maven</url>
+        </repository>
+    </distributionManagement>
+
     <build>
         <!-- Set nonstandard source and test source dirs -->
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>test</testSourceDirectory>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.12</version>
+            </extension>
+        </extensions>
 
         <pluginManagement>
             <plugins>
