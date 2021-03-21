@@ -47,33 +47,6 @@ public class ClassLoaderTest extends TestCase {
 		assertFalse(access1.getClass().equals(access2.getClass())); // But different classes
 		
 		assertEquals(initialCount+2, AccessClassLoader.activeAccessClassLoaders());
-		
-		testClassLoader1 = null;
-		testClass1 = null;
-		testObject1 = null;
-		access1 = null;
-		testClassLoader2 = null;
-		testClass2 = null;
-		testObject2 = null;
-		access2 = null;
-		
-		// Force GC to reclaim unreachable (or only weak-reachable) objects
-		System.gc();
-		try {
-			Object[] array = new Object[(int) Runtime.getRuntime().maxMemory()];
-			System.out.println(array.length);
-		} catch (Throwable e) {
-			// Ignore OME
-		}
-		System.gc();
-		int times = 0;
-		while (AccessClassLoader.activeAccessClassLoaders()>1 && times < 50) { // max 5 seconds, should be instant
-			Thread.sleep(100); // test again
-			times++;
-		}
-
-		// Yeah, both reclaimed!
-		assertEquals(1, AccessClassLoader.activeAccessClassLoaders());
 	}
 
 	public void testRemoveClassloaders () throws Exception {
