@@ -2,8 +2,6 @@
 package com.esotericsoftware.reflectasm;
 
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
-import java.security.ProtectionDomain;
 import java.util.WeakHashMap;
 
 class AccessClassLoader extends ClassLoader {
